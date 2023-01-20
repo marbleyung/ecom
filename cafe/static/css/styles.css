@@ -5,7 +5,6 @@
 
 body{
     font-family: 'Exo 2', sans-serif;
-    color: #EEEEEE;
 }
 
 .header{
@@ -15,6 +14,7 @@ body{
     background-color: #101010;
 }
 .menu{
+    color: #eee;
     display: flex;
     justify-content: space-between;
 }
@@ -23,6 +23,7 @@ body{
     justify-content: space-between;
     align-items: center;
     list-style-type: none;
+    width: 500px;
 }
 .menu__link{
     text-decoration: none;
@@ -86,3 +87,27 @@ body{
 h1, h2, h3, h4, h5, h6{
     color: #111111;
     }
+
+.cart-row{
+    display: flex;
+    align-items: flex-stretch;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eceece
+}
+
+.row-image{
+    width: 100px;
+    }
+
+.quantity{
+    display: inline-block;
+    font-weight: 700;
+    padding-right: 10px;
+}
+
+.chg-quantity{
+    width: 12px;
+    cursor: pointer;
+    display: block;
+}
