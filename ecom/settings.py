@@ -113,12 +113,10 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+MEDIA_URL = '/images/'
+MEDIA_ROOT = BASE_DIR / 'cafe/static/images'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

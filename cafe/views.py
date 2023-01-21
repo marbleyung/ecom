@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from . import models as m
 
 def home(request):
     context = {}
@@ -7,7 +7,8 @@ def home(request):
 
 
 def products(request):
-    context = {}
+    products = m.Product.objects.all()
+    context = {'products': products}
     return render(request, 'cafe/products.html', context)
 
 

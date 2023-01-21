@@ -23,7 +23,7 @@ body{
     justify-content: space-between;
     align-items: center;
     list-style-type: none;
-    width: 500px;
+    width: 450px;
 }
 .menu__link{
     text-decoration: none;
@@ -110,4 +110,14 @@ h1, h2, h3, h4, h5, h6{
     width: 12px;
     cursor: pointer;
     display: block;
+}
+
+.form-field{
+	width:250px;
+	display: inline-block;
+	padding: 5px;
+}
+
+.col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
+	padding-top: 10px;
 }
