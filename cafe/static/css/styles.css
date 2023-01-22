@@ -79,8 +79,8 @@ body{
 .thumbnail{
     padding-top: 20px;
     margin-left: 50px;
-    width: 300px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     margin-bottom: 20px;
 }
 
@@ -98,6 +98,7 @@ h1, h2, h3, h4, h5, h6{
 
 .row-image{
     width: 100px;
+    height: 100px;
     }
 
 .quantity{
