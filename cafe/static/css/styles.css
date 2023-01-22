@@ -108,7 +108,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .chg-quantity{
-    width: 12px;
+    width: 15px;
     cursor: pointer;
     display: block;
 }
@@ -121,4 +121,11 @@ h1, h2, h3, h4, h5, h6{
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
 	padding-top: 10px;
+}
+#make-payment{
+    width: 75px;
+    height: 25px;
+}
+.hidden{
+	display: none!important;
 }

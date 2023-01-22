@@ -13,7 +13,7 @@ class Customer(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(null=True, blank=True)
     def __str__(self):
@@ -26,6 +26,7 @@ class Product(models.Model):
         except:
             url = ''
         return url
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
@@ -37,7 +38,7 @@ class Order(models.Model):
     @property
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
-        total = sum([item.get_total for item in orderitems])
+        total = sum([item.get_total for item in orderitems if item is not None])
         return total
 
     @property
@@ -47,6 +48,14 @@ class Order(models.Model):
         return total
 
 
+    @property
+    def shipping(self):
+        shipping = False
+        orderitems = self.orderitem_set.all()
+        for i in orderitems:
+            if i.product.digital is False:
+                shipping = True
+        return shipping
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
@@ -54,8 +63,11 @@ class OrderItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     @property
     def get_total(self):
-        total = self.product.price * self.quantity
-        return total
+        if self.product is not None and self.quantity is not None:
+            total = self.product.price * self.quantity
+            return total
+        else:
+            return 0
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)

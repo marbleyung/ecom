@@ -9,5 +9,6 @@ urlpatterns = [
     path('blog/', v.blog, name='blog'),
     path('cart/', v.cart, name='cart'),
     path('checkout/', v.checkout, name='checkout'),
-    path('update_item/', v.updateItem, name='update_item'),
+    path('products/update_item/', v.updateItem, name='update_item'),
+    path('process_order/', v.processOrder, name='process_order'),
 ]
