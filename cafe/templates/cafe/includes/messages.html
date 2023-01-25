@@ -2,9 +2,10 @@
 {% for message in messages %}
 <div class="container-fluid p-0" id="message_container">
   <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
-    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-   ❌
-    </button>
+<div data-bs-theme="dark">
+  <button type="button" class="btn-close" aria-label="Close"></button>
+  <button type="button" class="btn-close" disabled aria-label="Close"></button>
+</div>
     {{ message }}
   </div>
 </div>

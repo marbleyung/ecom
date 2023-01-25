@@ -81,7 +81,7 @@ class Order(models.Model):
         for i in orderitems:
             if i.product is None:
                 continue
-            if i.product.digital is False:
+            if i.product.category.digital is False:
                 shipping = True
         return shipping
 

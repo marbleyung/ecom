@@ -37,7 +37,6 @@ function addCookieItem(productId, action){
 	}
 	document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
 
-	location.reload()
 }
 
 function updateUserOrder(productId, action){
@@ -55,7 +54,6 @@ function updateUserOrder(productId, action){
         })
         .then((data) =>{
             console.log("Data:", data)
-            location.reload()
         });
 }
 

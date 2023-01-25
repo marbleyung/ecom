@@ -1,27 +1,46 @@
 {% extends 'cafe/base.html' %}
 {% load static %}
 {% block content %}
-    <div class="row">
-        {% for c in categories %}
-        <div class="col-lg-4">
-            <h5 id="{{c.title.lower}}"><strong>{{c.title.title}}</strong></h5>
-            {% for p in products %}
-                {% if p.category == c %}
-                <img class='thumbnail' src="{{p.image_URL}}">
-                    <div class="box-element product">
-                        <h6><strong>{{p.name}}</strong></h6>
-                        <p>{{p.description}}</p>
-                        <hr>
-                        {% if c.digital is False %}
-                        <button data-product={{p.id}} data-action="add"
-                                class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
-                        {% endif %}
-                        <a class="btn btn-outline-success" href="{% url 'show_product' p.slug%}">View</a>
-                        <h4 style="display: inline-block;float: right">{{p.price|floatformat:2}}$</h4>
+<div class="top-menu">
+{% for c in categories %}
+<a class='top-menu menu-link' href="#{{c.title}}">{{c.title.title}}</a>
+{% endfor %}
+</div>
+<section class="main-content">
+    <div class="container">
+        <div class="row">
+            {% for c in categories %}
+            <h5 id="{{c.title.lower}}" class="d-flex justify-content-center"><strong>{{c.title.title}}</strong></h5>
+            {% for product in products %}
+                {% if product.category == c %}
+            <div class="col-lg-4 col-sm-6 mb-3">
+                <div class="product-card">
+                    <div class="product-thumb">
+                        <a href="{% url 'show_product' product.slug %}"><img src="{{ product.image_URL }}">
+                        </a>
                     </div>
-                {% endif %}
-            {% endfor %}
+                    <div class="product-details">
+                        <h4>{{product.name}}</h4>
+                        <p>{{product.description}}</p>
+                        <div class="product-bottom-details d-flex justify-content-between">
+                            <div class="product-price">
+                                {{product.price}}$
+                            </div>
+                            <div class="product-links">
+                                {% if product.category.digital is False %}
+                                <button data-product="{{product.id}}" data-action="add" class="update-cart">
+                                    <i class="fa-regular fa-plus"></i></button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
+            {% endif %}
+            {% endfor %}
+            <hr>
+            {% endfor %}
+        </div>
     </div>
+</section>
 {% endblock %}
