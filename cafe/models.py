@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Customer(models.Model):
@@ -14,18 +15,43 @@ class Customer(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(null=True, blank=True)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    description = models.TextField(null=True)
+    slug = models.SlugField(max_length=200, unique=True, db_index=True, verbose_name='URL')
+
     def __str__(self):
         return str(self.name)
 
     @property
-    def imageURL(self):
+    def image_URL(self):
         try:
             url = self.image.url
         except:
             url = ''
         return url
+
+    def get_absolute_url(self):
+        return reverse('product', kwargs={'product_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
+        ordering = ['name']
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=100, null=True)
+    digital = models.BooleanField(default=False, null=True, blank=False)
+    slug = models.SlugField(max_length=200, unique=True, db_index=True, verbose_name='URL')
+
+    def __str__(self):
+        return str(self.title)
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
@@ -35,6 +61,7 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.transaction_id)
+
     @property
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
@@ -47,7 +74,6 @@ class Order(models.Model):
         total = sum([item.quantity for item in orderitems])
         return total
 
-
     @property
     def shipping(self):
         shipping = False
@@ -58,6 +84,8 @@ class Order(models.Model):
             if i.product.digital is False:
                 shipping = True
         return shipping
+
+
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
@@ -73,6 +101,7 @@ class OrderItem(models.Model):
             self.delete()
             total = self.product.price * self.quantity
             return total
+
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)

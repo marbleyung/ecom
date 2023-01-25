@@ -2,19 +2,26 @@
 {% load static %}
 {% block content %}
     <div class="row">
-        {% for p in products %}
+        {% for c in categories %}
         <div class="col-lg-4">
-            <img class='thumbnail' src="{{p.imageURL}}">
-            <div class="box-element product">
-                <h6><strong>{{p.name}}</strong></h6>
-                <hr>
-
-                <button data-product={{p.id}} data-action="add"
-                        class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
-                <a class="btn btn-outline-success" href="#">View</a>
-                <h4 style="display: inline-block;float: right">{{p.price|floatformat:2}}$</h4>
+            <h5 id="{{c.title.lower}}"><strong>{{c.title.title}}</strong></h5>
+            {% for p in products %}
+                {% if p.category == c %}
+                <a href="{%url 'show_product' p.slug %}"><img class='thumbnail' src="{{p.image_URL}}"></a>
+                    <div class="box-element product">
+                        <h6><strong>{{p.name}}</strong></h6>
+                        <p>{{p.description}}</p>
+                        <hr>
+                        {% if c.digital is False %}
+                        <button data-product={{p.id}} data-action="add"
+                                class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+                        {% endif %}
+                        <a class="btn btn-outline-success" href="#">View</a>
+                        <h4 style="display: inline-block;float: right">{{p.price|floatformat:2}}$</h4>
+                    </div>
+                {% endif %}
+            {% endfor %}
             </div>
-        </div>
         {% endfor %}
     </div>
 {% endblock %}

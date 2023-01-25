@@ -79,15 +79,18 @@ body{
 .thumbnail{
     padding-top: 20px;
     margin-left: 50px;
-    width: 250px;
-    height: 250px;
+    max-width: 100%;
+    width: 300px;
+    height: 300px;
     margin-bottom: 20px;
 }
 
 h1, h2, h3, h4, h5, h6{
     color: #111111;
     }
-
+h6{
+    text-align: center;
+}
 .cart-row{
     display: flex;
     align-items: flex-stretch;
@@ -121,10 +124,63 @@ h1, h2, h3, h4, h5, h6{
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
 	padding-top: 10px;
+
 }
 #make-payment{
     width: 75px;
     height: 25px;
+}
+
+.single-post{
+   display: flex;
+   flex-wrap: wrap;
+}
+
+
+.menu-categories{
+    color: #111111;
+    display: flex;
+    justify-content: space-between;
+}
+.menu-categories-ul{
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menu-categories-link{
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 20px;
+    color: #111111;
+    padding: 0px 25px 0px 25px;
+}
+
+.menu-categories-link:hover{
+    color: #05A88D;
+}
+
+.category{
+    display: flex;
+    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.single-post{
+    background-color: #EEEEEE;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-image{
+    max-height: 20%;
+    max-width: 20%;
+    width: auto;
+    height: auto;
 }
 .hidden{
 	display: none!important;

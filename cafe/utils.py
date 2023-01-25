@@ -1,5 +1,7 @@
 import json
 from . import models as m
+
+
 def form_context(request):
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -18,6 +20,7 @@ def form_context(request):
         for i in cart:
             try:
                 product = m.Product.objects.get(id=i)
+                category = m.Category.objects.get(title=product.category)
                 total = (product.price * cart[i]['quantity'])
                 cart_items += cart[i]['quantity']
                 order['get_cart_total'] += total
@@ -27,14 +30,15 @@ def form_context(request):
                         'id': product.id,
                         'name': product.name,
                         'price': product.price,
-                        'imageURL': product.imageURL
+                        'image_URL': product.image_URL
                 },
                     'quantity': cart[i]['quantity'],
                     'get_total': total
                 }
                 items.append(item)
-                if product.digital is False:
+                if category.digital is False:
                     order['shipping'] = True
+                    print('utils line 39')
             except Exception as e:
                 pass
 

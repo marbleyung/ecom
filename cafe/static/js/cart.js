@@ -42,7 +42,7 @@ function addCookieItem(productId, action){
 
 function updateUserOrder(productId, action){
     console.log('All is fine')
-    var url = '/products/update_item/'
+    var url = '/update_item/'
     fetch(url, {
         method: 'POST',
         headers: {'Content-Type': 'application/json',

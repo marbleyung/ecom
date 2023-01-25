@@ -1,9 +1,9 @@
 import datetime
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from . import models as m
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .utils import form_context, guest_order
 
 
@@ -14,13 +14,22 @@ def home(request):
 def products(request):
     context = form_context(request)
     products = m.Product.objects.all()
+    categories = m.Category.objects.all()
     context['products'] = products
+    context['categories'] = categories
     return render(request, 'cafe/products.html', context)
 
 
 def about(request):
     context = {}
     return render(request, 'cafe/about.html', context)
+
+
+def show_product(request, product_slug):
+    product = get_object_or_404(m.Product, slug=product_slug)
+    context = form_context(request)
+    context['product'] = product
+    return render(request, 'cafe/show_product.html', context)
 
 
 def contacts(request):
@@ -31,6 +40,7 @@ def contacts(request):
 def blog(request):
     context = {}
     return render(request, 'cafe/blog.html', context)
+
 
 def cart(request):
     context = form_context(request)
@@ -44,21 +54,17 @@ def checkout(request):
 
 def updateItem(request):
     data = json.loads(request.body)
-    productId = data['productId']
+    product_id = data['productId']
     action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
 
     customer = request.user.customer
-    product = m.Product.objects.get(id=productId)
+    product = m.Product.objects.get(id=product_id)
     order, created = m.Order.objects.get_or_create(customer=customer, complete=False)
     orderItem, created = m.OrderItem.objects.get_or_create(order=order, product=product)
 
     if action == 'add':
-        print('add-zalypa')
         orderItem.quantity += 1
     elif action =='remove':
-        print('remove-zalypa')
         orderItem.quantity -= 1
 
     orderItem.save()

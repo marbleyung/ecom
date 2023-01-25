@@ -44,8 +44,7 @@
 			<br>
 			<div class="box-element hidden" id="payment-info">
 				<small>Paypal Options</small>
-				<hr>
-				<button id="make-payment">Pay</button>
+				<div id="paypal-button-container"></div>
 			</div>
 
 		</div>
@@ -58,7 +57,7 @@
 				<hr>
 				{% for i in items %}
 				<div class="cart-row">
-					<div style="flex:2"><img class="row-image" src="{{i.product.imageURL}}"></div>
+					<div style="flex:2"><img class="row-image" src="{{i.product.image_URL}}"></div>
 					<div style="flex:2"><p>{{i.product.name}}</p></div>
 					<div style="flex:1"><p>{{i.product.price|floatformat:2}}$</p></div>
 					<div style="flex:1"><p>{{i.quantity}}</p></div>
@@ -69,7 +68,34 @@
 			</div>
 		</div>
 	</div>
+<!--paste LIVE paypal id (not SANDBOX) after 'id' below-->
+<script src="https://www.paypal.com/sdk/js?client-id=AXMWfoMPDByiuPYKuY9fQ8iJ4yGg3x54hfZSuVCUjmGUHPET-NTBnOUrV0ZDgYCnqvicugjjrx_YAIuY&currency=USD"></script>
+<script>
+	var total = '{{order.get_cart_total}}'
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
 
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: parseFloat(total).toFixed(2)
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+					submitFormData()
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
 <script type="text/javascript">
 	var shipping = '{{order.shipping}}'
 	var total = '{{order.get_cart_total}}'

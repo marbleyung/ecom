@@ -1,0 +1,14 @@
+{% extends 'cafe/base.html' %}
+{% load static %}
+{% block content %}
+  <div class="single-post">
+    <h5><strong>{{product.name}}</strong></h5>
+    <a><img class='main-image' src="{{product.image_URL}}"></a>
+    <p>{{product.description}}</p>
+    <hr>
+    <button data-product={{product.id}} data-action="add"
+            class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
+  <a class="btn btn-outline-success" href="#">View</a>
+  <h4 style="display: inline-block;float: right">{{p.price|floatformat:2}}$</h4>
+</div>
+{% endblock %}
