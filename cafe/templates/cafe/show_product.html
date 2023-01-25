@@ -8,7 +8,17 @@
     <hr>
     <button data-product={{product.id}} data-action="add"
             class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
-  <a class="btn btn-outline-success" href="#">View</a>
-  <h4 style="display: inline-block;float: right">{{p.price|floatformat:2}}$</h4>
+    <hr>
+  <h4 style="display: inline-block;float: right">{{product.price|floatformat:2}}$</h4>
 </div>
+<hr>
+<h4>Another {{product.category}}s you might like:</h4>
+{% for p in products %}
+{% if p.category == product.category and p.name != product.name%}
+<div class="item-recommend">
+  <a href="{% url 'show_product' p.slug %}"><h5><strong>{{p.name}}</strong></h5></a>
+  <img class='mini-image' src="{{p.image_URL}}">
+</div>
+{% endif %}
+{% endfor %}
 {% endblock %}

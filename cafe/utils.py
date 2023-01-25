@@ -5,6 +5,7 @@ from . import models as m
 def form_context(request):
     if request.user.is_authenticated:
         customer = request.user.customer
+        print(customer)
         order, created = m.Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cart_items = order.get_cart_items

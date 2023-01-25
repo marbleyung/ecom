@@ -23,7 +23,7 @@ body{
     justify-content: space-between;
     align-items: center;
     list-style-type: none;
-    width: 450px;
+    width: 350px;
 }
 .menu__link{
     text-decoration: none;
@@ -31,20 +31,12 @@ body{
     font-weight: 300;
     line-height: 20px;
     letter-spacing: -0.015em;
-    text-align: left;
     color: #EEEEEE;
-    padding: 40px 40px 40px 40px;
-    flex-wrap: wrap;
+    padding: 25px 25px 25px 25px;
 
 }
 .menu__link:hover{
     color: #05A88D
-}
-.menu__li {
-    display: flex;
-    justify-content: space-between;
-    justify-content: flex-start;
-    align-items: justify;
 }
 .menu__logo{
     text-decoration: none;
@@ -53,14 +45,12 @@ body{
     font-weight: 500;
     line-height: 29px;
     letter-spacing: -0.015em;
-    text-align: left;
-    display: flex;
-    justify-content: center;
-    align-content: center;
     padding-top: 35px;
     padding-bottom: 35px;
     display: block;
 }
+
+
 
 #cart-icon{
     width: 30px;
@@ -181,6 +171,25 @@ h6{
     max-width: 20%;
     width: auto;
     height: auto;
+}
+
+.mini-image{
+    max-height: 10%;
+    max-width: 10%
+    width: 200px;
+    height: 200px;
+}
+
+.form-label {
+    display: inline-block;
+    min-width: 150px;
+    vertical-align: top;
+}
+
+.form-error ul {
+    list-style: none;
+    padding: 0;
+    color: #CC0000;
 }
 .hidden{
 	display: none!important;

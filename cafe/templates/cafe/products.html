@@ -7,7 +7,7 @@
             <h5 id="{{c.title.lower}}"><strong>{{c.title.title}}</strong></h5>
             {% for p in products %}
                 {% if p.category == c %}
-                <a href="{%url 'show_product' p.slug %}"><img class='thumbnail' src="{{p.image_URL}}"></a>
+                <img class='thumbnail' src="{{p.image_URL}}">
                     <div class="box-element product">
                         <h6><strong>{{p.name}}</strong></h6>
                         <p>{{p.description}}</p>
@@ -16,7 +16,7 @@
                         <button data-product={{p.id}} data-action="add"
                                 class="btn btn-outline-secondary add-btn update-cart">Add to cart</button>
                         {% endif %}
-                        <a class="btn btn-outline-success" href="#">View</a>
+                        <a class="btn btn-outline-success" href="{% url 'show_product' p.slug%}">View</a>
                         <h4 style="display: inline-block;float: right">{{p.price|floatformat:2}}$</h4>
                     </div>
                 {% endif %}

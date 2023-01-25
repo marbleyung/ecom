@@ -1,9 +1,15 @@
 import datetime
 import json
 
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, get_object_or_404, redirect
+
 from . import models as m
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
+
+from .forms import NewUserForm
 from .utils import form_context, guest_order
 
 
@@ -27,8 +33,10 @@ def about(request):
 
 def show_product(request, product_slug):
     product = get_object_or_404(m.Product, slug=product_slug)
+    products = m.Product.objects.all()
     context = form_context(request)
     context['product'] = product
+    context['products'] = products
     return render(request, 'cafe/show_product.html', context)
 
 
@@ -104,3 +112,47 @@ def processOrder(request):
             zipcode=data['shipping']['zipcode'],
         )
     return JsonResponse('Order has been submitted', safe=False)
+
+
+def register(request):
+    if request.method == "POST":
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            customer = m.Customer.objects.create(
+                email=user.email,
+                name=user.username,
+            )
+            customer.user = user
+            customer.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("products")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = NewUserForm()
+    return render(request=request, template_name="cafe/register.html", context={"register_form": form})
+
+
+def login_user(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("products")
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = AuthenticationForm()
+    return render(request=request, template_name="cafe/login.html", context={"login_form": form})
+
+
+def logout_user(request):
+    logout(request)
+    messages.info(request, "You have successfully logged out.")
+    return redirect("products")
