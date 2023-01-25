@@ -8,9 +8,12 @@ def form_context(request):
         order, created = m.Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cart_items = order.get_cart_items
+        print('Cart_items:', cart_items)
+        print('items:', items)
     else:
         try:
             cart = json.loads(request.COOKIES['cart'])
+            print('cart:', cart)
         except Exception as e:
             cart = {}
         finally:
@@ -38,7 +41,6 @@ def form_context(request):
                 items.append(item)
                 if category.digital is False:
                     order['shipping'] = True
-                    print('utils line 39')
             except Exception as e:
                 pass
 
@@ -67,5 +69,5 @@ def guest_order(request, data):
             order=order,
             quantity=i['quantity'],
         )
-
+    print('guest order', order)
     return customer, order

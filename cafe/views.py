@@ -64,7 +64,7 @@ def updateItem(request):
     data = json.loads(request.body)
     product_id = data['productId']
     action = data['action']
-
+    print(action, data, 'line 67')
     customer = request.user.customer
     product = m.Product.objects.get(id=product_id)
     order, created = m.Order.objects.get_or_create(customer=customer, complete=False)
@@ -79,7 +79,7 @@ def updateItem(request):
 
     if orderItem.quantity <= 0:
         orderItem.delete()
-
+    print('views line 82')
     return JsonResponse('Item has been added', safe=False)
 
 
