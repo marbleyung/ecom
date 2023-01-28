@@ -2,4 +2,13 @@
 {% load static %}
 {% block content %}
 <h3>Blog</h3>
+{% if user.is_superuser %}
+<a href="{% url 'post_new' %}"><i class="fa-solid fa-plus"></i></a>
+{% endif %}
+{% for p in posts %}
+<article class="post">
+<a href="{% url 'post_detail' p.slug %}">{{p.title}}</a>
+<hr>
+</article>
+{% endfor %}
 {% endblock %}

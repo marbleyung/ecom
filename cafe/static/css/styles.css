@@ -54,7 +54,7 @@ a:hover {
 
 .my-carousel .carousel-item{
     display: flex;
-    max-height: 500px;
+    max-height: 300px;
 }
 
 .my-carousel .carousel-item img{
@@ -75,7 +75,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 200px;
+    height: 320px;
     padding: 20px;
 }
 
@@ -292,6 +292,14 @@ h6{
     padding: 0;
     color: #CC0000;
 }
+.product-menu {
+    background: #aaa;
+}
+.menu-link {
+    text-decoration: none;
+    color: #f1f2f3;
+}
+
 .hidden{
 	display: none!important;
 }

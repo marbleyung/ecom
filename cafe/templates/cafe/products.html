@@ -1,10 +1,12 @@
 {% extends 'cafe/base.html' %}
 {% load static %}
 {% block content %}
-<div class="top-menu">
+<div class="product-menu">
+    <div class="container-fluid">
 {% for c in categories %}
-<a class='top-menu menu-link' href="#{{c.title}}">{{c.title.title}}</a>
+<a class='product-menu menu-link' href="#{{c.title}}">{{c.title.upper}}</a>
 {% endfor %}
+    </div>
 </div>
 <section class="main-content">
     <div class="container">

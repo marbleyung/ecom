@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['marblemar61e.pythonanywhere.com', '127.0.0.1', ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Application definition
 
 INSTALLED_APPS = [
