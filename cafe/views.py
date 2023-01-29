@@ -15,12 +15,16 @@ from django.utils.http import urlsafe_base64_encode
 from . import models as m
 from django.http import JsonResponse, HttpResponse
 
-from .forms import NewUserForm, PostForm, CommentForm
+from .forms import NewUserForm, PostForm, CommentForm, ContactForm
 from .utils import form_context, guest_order
 
 
 def home(request):
     return render(request, 'cafe/base.html')
+
+
+def about(request):
+    return render(request, 'cafe/about.html')
 
 
 def products(request):
@@ -98,11 +102,6 @@ def show_product(request, product_slug):
     context['product'] = product
     context['products'] = products
     return render(request, 'cafe/show_product.html', context)
-
-
-def contacts(request):
-    context = {}
-    return render(request, 'cafe/contacts.html', context)
 
 
 def cart(request):
@@ -224,7 +223,7 @@ def password_reset_request(request):
                     email_template_name = "cafe/password/password_reset_email.txt"
                     c = {
                         "email": user.email,
-                        'domain': '127.0.0.1:8000',
+                        'domain': 'marblemar61e.pythonanywhere.com',
                         'site_name': 'Website',
                         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                         "user": user,
@@ -233,7 +232,7 @@ def password_reset_request(request):
                     }
                     email = render_to_string(email_template_name, c)
                     try:
-                        send_mail(subject, email, 'admin@example.com', [user.email], fail_silently=False)
+                        send_mail(subject, email, 'raskolbrd@gmail.com', [user.email], fail_silently=False)
                     except BadHeaderError:
                         return HttpResponse('Invalid header found.')
                     messages.success(request,
@@ -243,3 +242,27 @@ def password_reset_request(request):
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="cafe/password/password_reset.html",
                   context={"password_reset_form": password_reset_form})
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = "Website Inquiry"
+            body = {
+                'first_name': form.cleaned_data['first_name'],
+                'last_name': form.cleaned_data['last_name'],
+                'email': form.cleaned_data['email_address'],
+                'message': form.cleaned_data['message'],
+            }
+            message = "\n".join(body.values())
+
+            try:
+                # send_mail(subject, message, from_email=body['email'], recipient_list=['raskolbrd@gmail.com'])
+                send_mail(subject, message, 'admin@example.com', recipient_list=['admin@example.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect("products")
+
+    form = ContactForm()
+    return render(request, "cafe/contact.html", {'form': form})

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 
 from django.contrib.messages import constants as messages
+from environs import Env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,8 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['marblemar61e.pythonanywhere.com', '127.0.0.1', ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -132,3 +131,12 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
+
+env = Env()
+env.read_env(r'C:\Users\snapk\ecommerce\ecom\.env')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME')
+AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT')
